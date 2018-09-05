@@ -4,6 +4,8 @@ public class ZipCodeMetaData {
 	private String city;
 	private double temperature;
 	private double latitude, longitude;
+	private String timeZone;
+	private double elevation;
 
 	public String getCity() {
 		return city;
@@ -35,6 +37,22 @@ public class ZipCodeMetaData {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public double getElevation() {
+		return elevation;
+	}
+
+	public void setElevation(double elevation) {
+		this.elevation = elevation;
 	}
 
 }

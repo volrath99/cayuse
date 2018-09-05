@@ -1,25 +1,26 @@
 package cayuse.exercise;
 
+import java.text.DecimalFormat;
+
+import cayuse.exercise.service.ElevationRetriever;
+import cayuse.exercise.service.TimeZoneRetriever;
 import cayuse.exercise.service.WeatherRetriever;
+import cayuse.exercise.service.ZipCodeDataRetreiver;
 import cayuse.exercise.service.data.TemperatureUnit;
-import cayuse.exercise.service.data.WeatherData;
 import cayuse.exercise.service.data.ZipCodeMetaData;
+import cayuse.exercise.service.imp.GoogleElevationRetriever;
+import cayuse.exercise.service.imp.GoogleTimeZoneRetriever;
 import cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
-import cayuse.exercise.service.imp.transformers.ResponsesToZipCodeMetaData;
 
 public class Location {
+	private static final DecimalFormat ELEVATION_FORMAT = new DecimalFormat("#,###");
 
 	public static void main(String[] args) {
 		int zip = getValidatedZip(args);
-
-		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever("d16f2baab3c871115936e2d6cca61968");
-
-		WeatherData weatherData = weatherRetriever.getWeatherData(zip, TemperatureUnit.IMPERIAL);
-		
-		printMetaData(ResponsesToZipCodeMetaData.transform(weatherData));
-
-//		metaData = retriever.getZipCodeMetaData(61025, TemperatureUnit.IMPERIAL);
-//		printMetaData(metaData);
+		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver();
+		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zip, TemperatureUnit.IMPERIAL);
+		printMetaData(zipCodeMetaData);
+		// TODO: Test multiple calls.
 	}
 
 	public static int getValidatedZip(String[] args) {
@@ -39,6 +40,18 @@ public class Location {
 		return zip;
 	}
 
+	public static ZipCodeDataRetreiver getZipCodeDataRetreiver() {
+		// TODO: Put keys into props.
+		String openWeatherMapApiId = "d16f2baab3c871115936e2d6cca61968";
+		String googleApiKey = "AIzaSyA3INAVopzfnJwkV_o68y6mNfpTxmH3HqQ";
+
+		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(openWeatherMapApiId);
+		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(googleApiKey);
+		ElevationRetriever elevationRetriever = new GoogleElevationRetriever(googleApiKey);
+
+		return new ZipCodeDataRetreiver(weatherRetriever, timeZoneRetriever, elevationRetriever);
+	}
+
 	public static void printMetaData(ZipCodeMetaData metaData) {
 		System.out.format(getFormattedMetaData(metaData));
 		System.out.println(metaData.getCity());
@@ -49,8 +62,9 @@ public class Location {
 
 	public static String getFormattedMetaData(ZipCodeMetaData metaData) {
 		return String.format(
-				"At the location %s, the temperature is %1.0f, the timezone is $TIMEZONE, and the elevation is $ELEVATION %n",
-				metaData.getCity(), metaData.getTemperature());
+				"At the location %s, the temperature is %1.0f, the timezone is %s, and the elevation is %s%n",
+				metaData.getCity(), metaData.getTemperature(), metaData.getTimeZone(),
+				ELEVATION_FORMAT.format(metaData.getElevation()));
 	}
 
 }

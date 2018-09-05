@@ -22,6 +22,7 @@ public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements
 
 		// TODO: Handle response status? WHy doesn't timezone have this?
 		
+		// TODO: Convert to feet?
 		return response.getResults().getElevation();
 	}
 

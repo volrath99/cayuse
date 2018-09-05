@@ -9,7 +9,7 @@ import cayuse.exercise.service.WeatherRetriever;
 import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.WeatherData;
 import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponse;
-import cayuse.exercise.service.imp.transformers.OpenWeatherMapZipResponseToWeatherData;
+import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponseToWeatherData;
 
 public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	// TODO: Put in props?
