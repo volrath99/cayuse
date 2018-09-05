@@ -46,6 +46,7 @@ public class ZipCodeDataRetreiver {
 	private ZipCodeMetaData getUnCachedZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
 		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode);
 
+		// TODO: Add a separate cache for timezone and elevation for a longer period as they don't change.
 		// Async.
 		Future<String> timeZoneFuture = timeZoneExecutor.submit(() -> {
 			return timeZoneRetriever.getTimeZone(weatherData.getLatitude(), weatherData.getLongitude());
