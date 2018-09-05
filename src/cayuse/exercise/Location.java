@@ -1,6 +1,9 @@
 package cayuse.exercise;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Properties;
 
 import cayuse.exercise.service.ElevationRetriever;
 import cayuse.exercise.service.TimeZoneRetriever;
@@ -16,8 +19,10 @@ public class Location {
 	private static final DecimalFormat ELEVATION_FORMAT = new DecimalFormat("#,###");
 
 	public static void main(String[] args) {
+		Properties properties = readProperties();
 		int zip = getValidatedZip(args);
-		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver();
+		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver(
+				properties.getProperty("openWeatherMapApiId"), properties.getProperty("googleApiKey"));
 		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zip, TemperatureUnit.IMPERIAL);
 		printMetaData(zipCodeMetaData);
 		// TODO: Test multiple calls.
@@ -40,11 +45,26 @@ public class Location {
 		return zip;
 	}
 
-	public static ZipCodeDataRetreiver getZipCodeDataRetreiver() {
-		// TODO: Put keys into props.
-		String openWeatherMapApiId = "d16f2baab3c871115936e2d6cca61968";
-		String googleApiKey = "AIzaSyA3INAVopzfnJwkV_o68y6mNfpTxmH3HqQ";
+	public static Properties readProperties() {
+		Properties properties = new Properties();
+		String workingDir = System.getProperty("user.dir");
+		try {
+			FileInputStream stream = new FileInputStream(workingDir + "/resources/cayuse.properties");
+			properties.load(stream);
+			stream.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to read cayuse.properties: " + e.getMessage());
+		}
+		if (properties.getProperty("openWeatherMapApiId") == null) {
+			throw new RuntimeException("openWeatherMapApiId required property.");
+		}
+		if (properties.getProperty("googleApiKey") == null) {
+			throw new RuntimeException("googleApiKey required property.");
+		}
+		return properties;
+	}
 
+	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey) {
 		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(openWeatherMapApiId);
 		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(googleApiKey);
 		ElevationRetriever elevationRetriever = new GoogleElevationRetriever(googleApiKey);
