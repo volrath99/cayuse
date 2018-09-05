@@ -1,7 +1,8 @@
 package cayuse.exercise.service;
 
+import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.ZipCodeMetaData;
 
 public interface ZipCodeDataRetreiver {
-	ZipCodeMetaData getZipCodeMetaData(int zipCode);
+	public ZipCodeMetaData getZipCodeMetaData(int zipCode, TemperatureUnit temperatureUnit);
 }

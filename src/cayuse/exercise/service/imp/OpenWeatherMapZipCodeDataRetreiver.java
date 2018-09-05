@@ -6,37 +6,30 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import cayuse.exercise.service.ZipCodeDataRetreiver;
+import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.ZipCodeMetaData;
 import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponse;
 
 public class OpenWeatherMapZipCodeDataRetreiver implements ZipCodeDataRetreiver {
-	private final Client client;
+	// TODO: Put in props?
+	private static final String URI = "http://api.openweathermap.org/data/2.5/weather";
 
-	public OpenWeatherMapZipCodeDataRetreiver() {
+	private final Client client;
+	private final String appId;
+
+	public OpenWeatherMapZipCodeDataRetreiver(String appId) {
 		client = ClientBuilder.newClient();
+		this.appId = appId;
 	}
 
 	@Override
-	public ZipCodeMetaData getZipCodeMetaData(int zipCode) {
-		// TODO: get variables
-		WebTarget target = client.target("http://api.openweathermap.org").path("/data/2.5/weather")
-				.queryParam("zip", zipCode + ",us").queryParam("units", "imperial")
-				.queryParam("appid", "d16f2baab3c871115936e2d6cca61968");
+	public ZipCodeMetaData getZipCodeMetaData(int zipCode, TemperatureUnit temperatureUnit) {
+		WebTarget target = client.target(URI).queryParam("zip", zipCode + ",us")
+				.queryParam("units", temperatureUnit.toString()).queryParam("appid", appId);
 		OpenWeatherMapZipResponse response = target.request(MediaType.APPLICATION_JSON)
 				.get(OpenWeatherMapZipResponse.class);
-		
 		// TODO: cache
-
-		// TODO: Check for errors on response!
-		
-		// TODO: Transform.
-
-		System.out.println(response.getName());
-		System.out.println(response.getTemperature());
-		System.out.println(response.getLatitude());
-		System.out.println(response.getLongitude());
-
-		return new ZipCodeMetaData();
+		return OpenWeatherMapZipResponseToZipCodeMetaData.transform(response);
 	}
 
 }

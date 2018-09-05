@@ -21,26 +21,21 @@ public class OpenWeatherMapZipResponse {
 	public Object sys;
 	@JsonIgnore
 	public int id;
-	
+
 	public String name;
-	
+
 	@JsonIgnore
 	public int cod;
 
 	public String getName() {
 		return name;
 	}
-	
-	public double getTemperature() {
-		return main.getTemp();
-	}
-	
-	public double getLatitude() {
-		return coord.getLat();
-	}
-	
-	public double getLongitude() {
-		return coord.getLon();
+
+	public OpenWeatherMapMain getMain() {
+		return main;
 	}
 
+	public OpenWeatherMapCoord getCoord() {
+		return coord;
+	}
 }
