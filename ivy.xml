@@ -1,15 +1,15 @@
 <ivy-module version="2.0">
     <info organisation="cayuse.exercise" module="location"/>
     <dependencies>
-    
+
       <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-      <dependency org="com.google.guava" name="guava" rev="26.0-jre"/> -->
+      <dependency org="com.google.guava" name="guava" rev="26.0-jre"/>
     
       <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson -->
       <dependency org="org.glassfish.jersey.media" name="jersey-media-json-jackson" rev="2.27"/>
     
       <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
       <dependency org="org.glassfish.jersey.core" name="jersey-client" rev="2.27"/>
-      
+
     </dependencies>
 </ivy-module>
