@@ -4,6 +4,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import cayuse.exercise.service.data.ResponsesToZipCodeMetaData;
 import cayuse.exercise.service.data.WeatherData;
@@ -15,6 +20,7 @@ public class ZipCodeDataRetreiver {
 	private final ElevationRetriever elevationRetriever;
 	private final ExecutorService timeZoneExecutor;
 	private final ExecutorService elevationExecutor;
+	private final LoadingCache<Integer, ZipCodeMetaData> cachedZipCodeMetaDatas;
 
 	public ZipCodeDataRetreiver(WeatherRetriever weatherRetriever, TimeZoneRetriever timeZoneRetriever,
 			ElevationRetriever elevationRetriever) {
@@ -23,11 +29,21 @@ public class ZipCodeDataRetreiver {
 		this.elevationRetriever = elevationRetriever;
 		timeZoneExecutor = Executors.newFixedThreadPool(4);
 		elevationExecutor = Executors.newFixedThreadPool(4);
+		cachedZipCodeMetaDatas = CacheBuilder.newBuilder().maximumSize(500).expireAfterWrite(1, TimeUnit.MINUTES)
+				.build(new CacheLoader<Integer, ZipCodeMetaData>() {
+					@Override
+					public ZipCodeMetaData load(Integer zipCode) throws Exception {
+						return getUnCachedZipCodeMetaData(zipCode);
+					}
+				});
+	}
+
+	public ZipCodeMetaData getZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
+		return cachedZipCodeMetaDatas.get(zipCode);
 	}
 
 	// TODO: Add logs to obtain frequency and API call timing.
-	public ZipCodeMetaData getZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
-		// TODO: Cache.
+	private ZipCodeMetaData getUnCachedZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
 		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode);
 
 		// Async.
