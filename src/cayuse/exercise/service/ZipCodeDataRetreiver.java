@@ -18,8 +18,6 @@ public class ZipCodeDataRetreiver {
 	private final WeatherRetriever weatherRetriever;
 	private final TimeZoneRetriever timeZoneRetriever;
 	private final ElevationRetriever elevationRetriever;
-	private final ExecutorService timeZoneExecutor;
-	private final ExecutorService elevationExecutor;
 	private final LoadingCache<Integer, ZipCodeMetaData> cachedZipCodeMetaDatas;
 
 	public ZipCodeDataRetreiver(WeatherRetriever weatherRetriever, TimeZoneRetriever timeZoneRetriever,
@@ -27,8 +25,6 @@ public class ZipCodeDataRetreiver {
 		this.weatherRetriever = weatherRetriever;
 		this.timeZoneRetriever = timeZoneRetriever;
 		this.elevationRetriever = elevationRetriever;
-		timeZoneExecutor = Executors.newFixedThreadPool(4);
-		elevationExecutor = Executors.newFixedThreadPool(4);
 		cachedZipCodeMetaDatas = CacheBuilder.newBuilder().maximumSize(500).expireAfterWrite(1, TimeUnit.MINUTES)
 				.build(new CacheLoader<Integer, ZipCodeMetaData>() {
 					@Override
@@ -48,6 +44,8 @@ public class ZipCodeDataRetreiver {
 
 		// TODO: Add a separate cache for timezone and elevation for a longer period as they don't change.
 		// Async.
+		ExecutorService timeZoneExecutor = Executors.newSingleThreadExecutor();
+		ExecutorService elevationExecutor = Executors.newSingleThreadExecutor();
 		Future<String> timeZoneFuture = timeZoneExecutor.submit(() -> {
 			return timeZoneRetriever.getTimeZone(weatherData.getLatitude(), weatherData.getLongitude());
 		});
@@ -56,6 +54,8 @@ public class ZipCodeDataRetreiver {
 		});
 		String timeZone = timeZoneFuture.get();
 		double elevation = elevationFuture.get();
+		timeZoneExecutor.shutdown();
+		elevationExecutor.shutdown();
 
 		return ResponsesToZipCodeMetaData.transform(weatherData, timeZone, elevation);
 	}
