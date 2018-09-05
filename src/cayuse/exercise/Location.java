@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -20,7 +21,7 @@ import cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
 public class Location {
 	private static final DecimalFormat ELEVATION_FORMAT = new DecimalFormat("#,###");
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		Properties properties = readProperties();
 		int zip = getValidatedZip(args);
 		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver(
