@@ -21,9 +21,7 @@ public class OpenWeatherMapZipResponse {
 	public Object sys;
 	@JsonIgnore
 	public int id;
-
 	public String name;
-
 	@JsonIgnore
 	public int cod;
 

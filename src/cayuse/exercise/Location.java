@@ -1,19 +1,22 @@
 package cayuse.exercise;
 
-import cayuse.exercise.service.ZipCodeDataRetreiver;
+import cayuse.exercise.service.WeatherRetriever;
 import cayuse.exercise.service.data.TemperatureUnit;
+import cayuse.exercise.service.data.WeatherData;
 import cayuse.exercise.service.data.ZipCodeMetaData;
-import cayuse.exercise.service.imp.OpenWeatherMapZipCodeDataRetreiver;
+import cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
+import cayuse.exercise.service.imp.transformers.ResponsesToZipCodeMetaData;
 
 public class Location {
 
 	public static void main(String[] args) {
 		int zip = getValidatedZip(args);
 
-		ZipCodeDataRetreiver retriever = new OpenWeatherMapZipCodeDataRetreiver("d16f2baab3c871115936e2d6cca61968");
+		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever("d16f2baab3c871115936e2d6cca61968");
 
-		ZipCodeMetaData metaData = retriever.getZipCodeMetaData(zip, TemperatureUnit.IMPERIAL);
-		printMetaData(metaData);
+		WeatherData weatherData = weatherRetriever.getWeatherData(zip, TemperatureUnit.IMPERIAL);
+		
+		printMetaData(ResponsesToZipCodeMetaData.transform(weatherData));
 
 //		metaData = retriever.getZipCodeMetaData(61025, TemperatureUnit.IMPERIAL);
 //		printMetaData(metaData);
