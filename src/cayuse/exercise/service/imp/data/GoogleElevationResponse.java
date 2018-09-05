@@ -1,10 +1,12 @@
 package cayuse.exercise.service.imp.data;
 
+import java.util.List;
+
 public class GoogleElevationResponse {
-	public GoogleElevationResults results;
+	public List<GoogleElevationResults> results;
 	public String status;
 
-	public GoogleElevationResults getResults() {
+	public List<GoogleElevationResults> getResults() {
 		return results;
 	}
 

@@ -5,7 +5,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 public abstract class GoogleRetrieverAbstract {
-	// TODO: Put in props?
 	private static final String URI = "https://maps.googleapis.com/maps/api";
 
 	private final Client client;
@@ -18,9 +17,8 @@ public abstract class GoogleRetrieverAbstract {
 
 	abstract String getPath();
 
-	protected WebTarget getTarget(double latitude, double longitude) {
-		return client.target(URI).path(getPath()).queryParam("location", latitude + "," + longitude).queryParam("key",
-				key);
+	protected WebTarget getTarget() {
+		return client.target(URI).path(getPath()).queryParam("key", key);
 	}
 
 }
