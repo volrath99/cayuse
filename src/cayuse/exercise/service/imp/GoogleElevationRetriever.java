@@ -1,5 +1,6 @@
 package cayuse.exercise.service.imp;
 
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +10,8 @@ import cayuse.exercise.service.imp.data.GoogleElevationResponse;
 public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements ElevationRetriever {
 	private static final String PATH = "/elevation/json";
 
-	public GoogleElevationRetriever(String key) {
-		super(key);
+	public GoogleElevationRetriever(Client client, String key) {
+		super(client, key);
 	}
 
 	@Override

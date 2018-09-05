@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Properties;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
 import cayuse.exercise.service.ElevationRetriever;
 import cayuse.exercise.service.TimeZoneRetriever;
 import cayuse.exercise.service.WeatherRetriever;
@@ -63,9 +66,10 @@ public class Location {
 	}
 
 	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey) {
-		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(openWeatherMapApiId);
-		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(googleApiKey);
-		ElevationRetriever elevationRetriever = new GoogleElevationRetriever(googleApiKey);
+		Client client = ClientBuilder.newClient();
+		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(client, openWeatherMapApiId);
+		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(client, googleApiKey);
+		ElevationRetriever elevationRetriever = new GoogleElevationRetriever(client, googleApiKey);
 
 		return new ZipCodeDataRetreiver(weatherRetriever, timeZoneRetriever, elevationRetriever);
 	}

@@ -1,7 +1,6 @@
 package cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 public abstract class GoogleRetrieverAbstract {
@@ -10,8 +9,8 @@ public abstract class GoogleRetrieverAbstract {
 	private final Client client;
 	private final String key;
 
-	public GoogleRetrieverAbstract(String key) {
-		client = ClientBuilder.newClient();
+	public GoogleRetrieverAbstract(Client client, String key) {
+		this.client = client;
 		this.key = key;
 	}
 

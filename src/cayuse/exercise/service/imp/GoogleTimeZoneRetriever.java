@@ -1,5 +1,6 @@
 package cayuse.exercise.service.imp;
 
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +10,8 @@ import cayuse.exercise.service.imp.data.GoogleTimeZoneResponse;
 public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements TimeZoneRetriever {
 	private static final String PATH = "/timezone/json";
 
-	public GoogleTimeZoneRetriever(String key) {
-		super(key);
+	public GoogleTimeZoneRetriever(Client client, String key) {
+		super(client, key);
 	}
 
 	@Override

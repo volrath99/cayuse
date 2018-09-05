@@ -1,7 +1,6 @@
 package cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -18,8 +17,8 @@ public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	private final Client client;
 	private final String appId;
 
-	public OpenWeatherMapWeatherRetriever(String appId) {
-		client = ClientBuilder.newClient();
+	public OpenWeatherMapWeatherRetriever(Client client, String appId) {
+		this.client = client;
 		this.appId = appId;
 	}
 
