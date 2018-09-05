@@ -3,13 +3,25 @@ package cayuse.exercise.service.imp.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class GoogleElevationResults {
-	public double elevation;
+	private double elevation;
 	@JsonIgnore
-	public Object location;
+	private Object location;
 	@JsonIgnore
-	public double resolution;
+	private double resolution;
 
 	public double getElevation() {
 		return elevation;
+	}
+
+	public void setElevation(double elevation) {
+		this.elevation = elevation;
+	}
+
+	public void setLocation(Object location) {
+		this.location = location;
+	}
+
+	public void setResolution(double resolution) {
+		this.resolution = resolution;
 	}
 }

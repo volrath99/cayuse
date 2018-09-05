@@ -6,15 +6,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import cayuse.exercise.service.WeatherRetriever;
-import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.WeatherData;
 import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponse;
 import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponseToWeatherData;
 
 public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
-	// TODO: Put in props?
 	private static final String URI = "http://api.openweathermap.org/data/2.5/weather";
 	private static final String COUNTRY_CODE = "us";
+	private static final String TEMPERATURE_UNIT = "metric";
 
 	private final Client client;
 	private final String appId;
@@ -25,12 +24,12 @@ public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	}
 
 	@Override
-	public WeatherData getWeatherData(int zipCode, TemperatureUnit temperatureUnit) {
+	public WeatherData getWeatherData(int zipCode) {
 		WebTarget target = client.target(URI).queryParam("zip", zipCode + "," + COUNTRY_CODE)
-				.queryParam("units", temperatureUnit.toString()).queryParam("appid", appId);
+				.queryParam("units", TEMPERATURE_UNIT).queryParam("appid", appId);
 		OpenWeatherMapZipResponse response = target.request(MediaType.APPLICATION_JSON)
 				.get(OpenWeatherMapZipResponse.class);
-		// TODO: cache
+
 		return OpenWeatherMapZipResponseToWeatherData.transform(response);
 	}
 

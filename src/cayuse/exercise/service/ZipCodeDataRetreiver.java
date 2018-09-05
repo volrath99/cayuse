@@ -1,7 +1,6 @@
 package cayuse.exercise.service;
 
 import cayuse.exercise.service.data.ResponsesToZipCodeMetaData;
-import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.WeatherData;
 import cayuse.exercise.service.data.ZipCodeMetaData;
 
@@ -17,8 +16,10 @@ public class ZipCodeDataRetreiver {
 	}
 	
 	// TODO: Add logs to obtain frequency and API call timing.
-	public ZipCodeMetaData getZipCodeMetaData(int zipCode, TemperatureUnit temperatureUnit) {
-		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode, TemperatureUnit.IMPERIAL);
+	public ZipCodeMetaData getZipCodeMetaData(int zipCode) {
+		// TODO: Cache.
+		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode);
+		// TODO: Async.
 		String timeZone = timeZoneRetriever.getTimeZone(weatherData.getLatitude(), weatherData.getLongitude());
 		double elevation = elevationRetriever.getElevation(weatherData.getLatitude(), weatherData.getLongitude());
 		

@@ -1,5 +1,6 @@
 package cayuse.exercise.service.imp;
 
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import cayuse.exercise.service.ElevationRetriever;
@@ -14,12 +15,14 @@ public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements
 
 	@Override
 	public double getElevation(double latitude, double longitude) {
-		GoogleElevationResponse response = getTarget().queryParam("locations", latitude + "," + longitude)
-				.request(MediaType.APPLICATION_JSON).get(GoogleElevationResponse.class);
+		WebTarget target = getTarget().queryParam("locations", latitude + "," + longitude);
+		GoogleElevationResponse response = target.request(MediaType.APPLICATION_JSON)
+				.get(GoogleElevationResponse.class);
 
-		// TODO: Handle response status? WHy doesn't timezone have this?
+		if (!"OK".equals(response.getStatus())) {
+			throw new RuntimeException("Request [" + target.getUri() + "] failed: " + response.getErrorMessage());
+		}
 
-		// TODO: Convert to feet?
 		return response.getResults().get(0).getElevation();
 	}
 

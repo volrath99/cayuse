@@ -9,7 +9,6 @@ import cayuse.exercise.service.ElevationRetriever;
 import cayuse.exercise.service.TimeZoneRetriever;
 import cayuse.exercise.service.WeatherRetriever;
 import cayuse.exercise.service.ZipCodeDataRetreiver;
-import cayuse.exercise.service.data.TemperatureUnit;
 import cayuse.exercise.service.data.ZipCodeMetaData;
 import cayuse.exercise.service.imp.GoogleElevationRetriever;
 import cayuse.exercise.service.imp.GoogleTimeZoneRetriever;
@@ -23,26 +22,8 @@ public class Location {
 		int zip = getValidatedZip(args);
 		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver(
 				properties.getProperty("openWeatherMapApiId"), properties.getProperty("googleApiKey"));
-		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zip, TemperatureUnit.IMPERIAL);
+		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zip);
 		printMetaData(zipCodeMetaData);
-		// TODO: Test multiple calls.
-	}
-
-	public static int getValidatedZip(String[] args) {
-		if (args.length < 1) {
-			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
-		}
-		String userZipInput = args[0];
-		if (userZipInput.length() != 5) {
-			throw new IllegalArgumentException("Zip-code [" + userZipInput + "] must be 5 numbers.");
-		}
-		int zip;
-		try {
-			zip = Integer.valueOf(userZipInput);
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid zip-code [" + userZipInput + "].");
-		}
-		return zip;
 	}
 
 	public static Properties readProperties() {
@@ -64,6 +45,23 @@ public class Location {
 		return properties;
 	}
 
+	public static int getValidatedZip(String[] args) {
+		if (args.length < 1) {
+			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
+		}
+		String userZipInput = args[0];
+		if (userZipInput.length() != 5) {
+			throw new IllegalArgumentException("Zip-code [" + userZipInput + "] must be 5 numbers.");
+		}
+		int zip;
+		try {
+			zip = Integer.valueOf(userZipInput);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Invalid zip-code [" + userZipInput + "].");
+		}
+		return zip;
+	}
+
 	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey) {
 		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(openWeatherMapApiId);
 		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(googleApiKey);
@@ -74,15 +72,11 @@ public class Location {
 
 	public static void printMetaData(ZipCodeMetaData metaData) {
 		System.out.format(getFormattedMetaData(metaData));
-		System.out.println(metaData.getCity());
-		System.out.println(metaData.getTemperature());
-		System.out.println(metaData.getLatitude());
-		System.out.println(metaData.getLongitude());
 	}
 
 	public static String getFormattedMetaData(ZipCodeMetaData metaData) {
 		return String.format(
-				"At the location %s, the temperature is %1.0f, the timezone is %s, and the elevation is %s%n",
+				"At the location %s, the temperature is %1.0f*C, the timezone is %s, and the elevation is %s meters%n",
 				metaData.getCity(), metaData.getTemperature(), metaData.getTimeZone(),
 				ELEVATION_FORMAT.format(metaData.getElevation()));
 	}

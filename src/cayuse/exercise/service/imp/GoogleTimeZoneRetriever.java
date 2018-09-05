@@ -1,5 +1,6 @@
 package cayuse.exercise.service.imp;
 
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import cayuse.exercise.service.TimeZoneRetriever;
@@ -14,10 +15,12 @@ public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements 
 
 	@Override
 	public String getTimeZone(double latitude, double longitude) {
-		GoogleTimeZoneResponse response = getTarget().queryParam("location", latitude + "," + longitude)
-				.queryParam("timestamp", 0).request(MediaType.APPLICATION_JSON).get(GoogleTimeZoneResponse.class);
-		
-		// TODO: Check status. Test by changing parameter from location to locations.
+		WebTarget target = getTarget().queryParam("location", latitude + "," + longitude).queryParam("timestamp", 0);
+		GoogleTimeZoneResponse response = target.request(MediaType.APPLICATION_JSON).get(GoogleTimeZoneResponse.class);
+
+		if (!"OK".equals(response.getStatus())) {
+			throw new RuntimeException("Request [" + target.getUri() + "] failed: " + response.getErrorMessage());
+		}
 
 		return response.getTimeZoneName();
 	}

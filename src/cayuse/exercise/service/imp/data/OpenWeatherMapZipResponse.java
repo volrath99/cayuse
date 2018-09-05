@@ -3,27 +3,29 @@ package cayuse.exercise.service.imp.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class OpenWeatherMapZipResponse {
-	public OpenWeatherMapCoord coord;
+	private OpenWeatherMapCoord coord;
 	@JsonIgnore
-	public Object weather;
+	private Object weather;
 	@JsonIgnore
-	public String base;
-	public OpenWeatherMapMain main;
+	private String base;
+	private OpenWeatherMapMain main;
 	@JsonIgnore
-	public int visibility;
+	private int visibility;
 	@JsonIgnore
-	public Object wind;
+	private Object wind;
 	@JsonIgnore
-	public Object clouds;
+	private Object clouds;
 	@JsonIgnore
-	public int dt;
+	private Object rain;
 	@JsonIgnore
-	public Object sys;
+	private int dt;
 	@JsonIgnore
-	public int id;
-	public String name;
+	private Object sys;
 	@JsonIgnore
-	public int cod;
+	private int id;
+	private String name;
+	@JsonIgnore
+	private int cod;
 
 	public String getName() {
 		return name;
@@ -35,5 +37,57 @@ public class OpenWeatherMapZipResponse {
 
 	public OpenWeatherMapCoord getCoord() {
 		return coord;
+	}
+
+	public void setCoord(OpenWeatherMapCoord coord) {
+		this.coord = coord;
+	}
+
+	public void setWeather(Object weather) {
+		this.weather = weather;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+
+	public void setMain(OpenWeatherMapMain main) {
+		this.main = main;
+	}
+
+	public void setVisibility(int visibility) {
+		this.visibility = visibility;
+	}
+
+	public void setWind(Object wind) {
+		this.wind = wind;
+	}
+
+	public void setClouds(Object clouds) {
+		this.clouds = clouds;
+	}
+
+	public void setRain(Object rain) {
+		this.rain = rain;
+	}
+
+	public void setDt(int dt) {
+		this.dt = dt;
+	}
+
+	public void setSys(Object sys) {
+		this.sys = sys;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCod(int cod) {
+		this.cod = cod;
 	}
 }
