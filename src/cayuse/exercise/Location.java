@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -24,10 +26,12 @@ public class Location {
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		Properties properties = readProperties();
 		int zip = getValidatedZip(args);
+		ExecutorService pool = Executors.newCachedThreadPool();
 		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver(
-				properties.getProperty("openWeatherMapApiId"), properties.getProperty("googleApiKey"));
+				properties.getProperty("openWeatherMapApiId"), properties.getProperty("googleApiKey"), pool);
 		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zip);
 		printMetaData(zipCodeMetaData);
+		pool.shutdown();
 	}
 
 	public static Properties readProperties() {
@@ -66,13 +70,14 @@ public class Location {
 		return zip;
 	}
 
-	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey) {
+	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey,
+			ExecutorService pool) {
 		Client client = ClientBuilder.newClient();
 		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(client, openWeatherMapApiId);
 		TimeZoneRetriever timeZoneRetriever = new GoogleTimeZoneRetriever(client, googleApiKey);
 		ElevationRetriever elevationRetriever = new GoogleElevationRetriever(client, googleApiKey);
 
-		return new ZipCodeDataRetreiver(weatherRetriever, timeZoneRetriever, elevationRetriever);
+		return new ZipCodeDataRetreiver(weatherRetriever, timeZoneRetriever, elevationRetriever, pool);
 	}
 
 	public static void printMetaData(ZipCodeMetaData metaData) {

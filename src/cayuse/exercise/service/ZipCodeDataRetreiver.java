@@ -2,7 +2,6 @@ package cayuse.exercise.service;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -19,12 +18,14 @@ public class ZipCodeDataRetreiver {
 	private final TimeZoneRetriever timeZoneRetriever;
 	private final ElevationRetriever elevationRetriever;
 	private final LoadingCache<Integer, ZipCodeMetaData> cachedZipCodeMetaDatas;
+	private final ExecutorService pool;
 
 	public ZipCodeDataRetreiver(WeatherRetriever weatherRetriever, TimeZoneRetriever timeZoneRetriever,
-			ElevationRetriever elevationRetriever) {
+			ElevationRetriever elevationRetriever, ExecutorService pool) {
 		this.weatherRetriever = weatherRetriever;
 		this.timeZoneRetriever = timeZoneRetriever;
 		this.elevationRetriever = elevationRetriever;
+		this.pool = pool;
 		cachedZipCodeMetaDatas = CacheBuilder.newBuilder().maximumSize(500).expireAfterWrite(1, TimeUnit.MINUTES)
 				.build(new CacheLoader<Integer, ZipCodeMetaData>() {
 					@Override
@@ -44,18 +45,14 @@ public class ZipCodeDataRetreiver {
 
 		// TODO: Add a separate cache for timezone and elevation for a longer period as they don't change.
 		// Async.
-		ExecutorService timeZoneExecutor = Executors.newSingleThreadExecutor();
-		ExecutorService elevationExecutor = Executors.newSingleThreadExecutor();
-		Future<String> timeZoneFuture = timeZoneExecutor.submit(() -> {
+		Future<String> timeZoneFuture = pool.submit(() -> {
 			return timeZoneRetriever.getTimeZone(weatherData.getLatitude(), weatherData.getLongitude());
 		});
-		Future<Double> elevationFuture = elevationExecutor.submit(() -> {
+		Future<Double> elevationFuture = pool.submit(() -> {
 			return elevationRetriever.getElevation(weatherData.getLatitude(), weatherData.getLongitude());
 		});
 		String timeZone = timeZoneFuture.get();
 		double elevation = elevationFuture.get();
-		timeZoneExecutor.shutdown();
-		elevationExecutor.shutdown();
 
 		return ResponsesToZipCodeMetaData.transform(weatherData, timeZone, elevation);
 	}
