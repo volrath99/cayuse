@@ -34,7 +34,7 @@ public class Location {
 		pool.shutdown();
 	}
 
-	public static Properties readProperties() {
+	private static Properties readProperties() {
 		Properties properties = new Properties();
 		String workingDir = System.getProperty("user.dir");
 		try {
@@ -53,7 +53,7 @@ public class Location {
 		return properties;
 	}
 
-	public static int getValidatedZip(String[] args) {
+	private static int getValidatedZip(String[] args) {
 		if (args.length < 1) {
 			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
 		}
@@ -70,7 +70,7 @@ public class Location {
 		return zip;
 	}
 
-	public static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey,
+	private static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey,
 			ExecutorService pool) {
 		Client client = ClientBuilder.newClient();
 		WeatherRetriever weatherRetriever = new OpenWeatherMapWeatherRetriever(client, openWeatherMapApiId);
@@ -80,11 +80,11 @@ public class Location {
 		return new ZipCodeDataRetreiver(weatherRetriever, timeZoneRetriever, elevationRetriever, pool);
 	}
 
-	public static void printMetaData(ZipCodeMetaData metaData) {
+	private static void printMetaData(ZipCodeMetaData metaData) {
 		System.out.format(getFormattedMetaData(metaData));
 	}
 
-	public static String getFormattedMetaData(ZipCodeMetaData metaData) {
+	private static String getFormattedMetaData(ZipCodeMetaData metaData) {
 		return String.format(
 				"At the location %s, the temperature is %1.0f*C, the timezone is %s, and the elevation is %s meters.%n",
 				metaData.getCity(), metaData.getTemperature(), metaData.getTimeZone(),
