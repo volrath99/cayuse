@@ -17,7 +17,7 @@ public class ZipCodeDataRetreiver {
 	private final WeatherRetriever weatherRetriever;
 	private final TimeZoneRetriever timeZoneRetriever;
 	private final ElevationRetriever elevationRetriever;
-	private final LoadingCache<Integer, ZipCodeMetaData> cachedZipCodeMetaDatas;
+	private final LoadingCache<String, ZipCodeMetaData> cachedZipCodeMetaDatas;
 	private final ExecutorService pool;
 
 	public ZipCodeDataRetreiver(WeatherRetriever weatherRetriever, TimeZoneRetriever timeZoneRetriever,
@@ -27,20 +27,20 @@ public class ZipCodeDataRetreiver {
 		this.elevationRetriever = elevationRetriever;
 		this.pool = pool;
 		cachedZipCodeMetaDatas = CacheBuilder.newBuilder().maximumSize(500).expireAfterWrite(1, TimeUnit.MINUTES)
-				.build(new CacheLoader<Integer, ZipCodeMetaData>() {
+				.build(new CacheLoader<String, ZipCodeMetaData>() {
 					@Override
-					public ZipCodeMetaData load(Integer zipCode) throws Exception {
+					public ZipCodeMetaData load(String zipCode) throws Exception {
 						return getUnCachedZipCodeMetaData(zipCode);
 					}
 				});
 	}
 
-	public ZipCodeMetaData getZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
+	public ZipCodeMetaData getZipCodeMetaData(String zipCode) throws InterruptedException, ExecutionException {
 		return cachedZipCodeMetaDatas.get(zipCode);
 	}
 
 	// TODO: Add logs to obtain frequency and API call timing.
-	private ZipCodeMetaData getUnCachedZipCodeMetaData(int zipCode) throws InterruptedException, ExecutionException {
+	private ZipCodeMetaData getUnCachedZipCodeMetaData(String zipCode) throws InterruptedException, ExecutionException {
 		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode);
 
 		// TODO: Add a separate cache for timezone and elevation for a longer period as they don't change.

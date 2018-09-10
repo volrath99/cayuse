@@ -23,7 +23,7 @@ public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	}
 
 	@Override
-	public WeatherData getWeatherData(int zipCode) {
+	public WeatherData getWeatherData(String zipCode) {
 		WebTarget target = client.target(URI).queryParam("zip", zipCode + "," + COUNTRY_CODE)
 				.queryParam("units", TEMPERATURE_UNIT).queryParam("appid", appId);
 		OpenWeatherMapZipResponse response = target.request(MediaType.APPLICATION_JSON)

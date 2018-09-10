@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -21,11 +22,16 @@ import cayuse.exercise.service.imp.GoogleTimeZoneRetriever;
 import cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
 
 public class Location {
+	private static final Pattern ZIP_PATTERN = Pattern.compile("\\d{5}"); 
 	private static final DecimalFormat ELEVATION_FORMAT = new DecimalFormat("#,###");
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		if (args.length < 1) {
+			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
+		}
+		String zip = args[0];
+		validateZip(zip);
 		Properties properties = readProperties();
-		int zip = getValidatedZip(args);
 		ExecutorService pool = Executors.newCachedThreadPool();
 		ZipCodeDataRetreiver zipCodeDataRetreiver = getZipCodeDataRetreiver(
 				properties.getProperty("openWeatherMapApiId"), properties.getProperty("googleApiKey"), pool);
@@ -53,21 +59,11 @@ public class Location {
 		return properties;
 	}
 
-	private static int getValidatedZip(String[] args) {
-		if (args.length < 1) {
-			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
+	private static void validateZip(String zip) {
+		if (!ZIP_PATTERN.matcher(zip).matches()) {
+			throw new IllegalArgumentException("Invalid zip-code [" + zip + "].");
+			
 		}
-		String userZipInput = args[0];
-		if (userZipInput.length() != 5) {
-			throw new IllegalArgumentException("Zip-code [" + userZipInput + "] must be 5 numbers.");
-		}
-		int zip;
-		try {
-			zip = Integer.valueOf(userZipInput);
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid zip-code [" + userZipInput + "].");
-		}
-		return zip;
 	}
 
 	private static ZipCodeDataRetreiver getZipCodeDataRetreiver(String openWeatherMapApiId, String googleApiKey,
