@@ -80,7 +80,8 @@ public class Location {
 		System.out.format(getFormattedMetaData(metaData));
 	}
 
-	private static String getFormattedMetaData(ZipCodeMetaData metaData) {
+	// Visible for testing.
+	static String getFormattedMetaData(ZipCodeMetaData metaData) {
 		return String.format(
 				"At the location %s, the temperature is %1.0f*C, the timezone is %s, and the elevation is %s meters.%n",
 				metaData.getCity(), metaData.getTemperature(), metaData.getTimeZone(),
