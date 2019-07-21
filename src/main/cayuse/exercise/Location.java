@@ -1,4 +1,4 @@
-package cayuse.exercise;
+package main.cayuse.exercise;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,14 +12,14 @@ import java.util.regex.Pattern;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
-import cayuse.exercise.service.ElevationRetriever;
-import cayuse.exercise.service.TimeZoneRetriever;
-import cayuse.exercise.service.WeatherRetriever;
-import cayuse.exercise.service.ZipCodeDataRetreiver;
-import cayuse.exercise.service.data.ZipCodeMetaData;
-import cayuse.exercise.service.imp.GoogleElevationRetriever;
-import cayuse.exercise.service.imp.GoogleTimeZoneRetriever;
-import cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
+import main.cayuse.exercise.service.ElevationRetriever;
+import main.cayuse.exercise.service.TimeZoneRetriever;
+import main.cayuse.exercise.service.WeatherRetriever;
+import main.cayuse.exercise.service.ZipCodeDataRetreiver;
+import main.cayuse.exercise.service.data.ZipCodeMetaData;
+import main.cayuse.exercise.service.imp.GoogleElevationRetriever;
+import main.cayuse.exercise.service.imp.GoogleTimeZoneRetriever;
+import main.cayuse.exercise.service.imp.OpenWeatherMapWeatherRetriever;
 
 public class Location {
 	private static final Pattern ZIP_PATTERN = Pattern.compile("\\d{5}"); 

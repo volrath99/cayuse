@@ -1,11 +1,11 @@
-package cayuse.exercise.service.imp;
+package main.cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import cayuse.exercise.service.TimeZoneRetriever;
-import cayuse.exercise.service.imp.data.GoogleTimeZoneResponse;
+import main.cayuse.exercise.service.TimeZoneRetriever;
+import main.cayuse.exercise.service.data.GoogleTimeZoneResponse;
 
 public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements TimeZoneRetriever {
 	private static final String PATH = "/timezone/json";

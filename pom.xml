@@ -31,6 +31,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>${project.artifactId}</finalName>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
     <plugins>
@@ -69,7 +70,7 @@
           <archive>
             <manifest>
             	<addClasspath>true</addClasspath>
-            	<mainClass>cayuse.exercise.Location</mainClass>
+            	<mainClass>main.cayuse.exercise.Location</mainClass>
             	<classpathPrefix>dependency-jars/</classpathPrefix>
             </manifest>
           </archive>

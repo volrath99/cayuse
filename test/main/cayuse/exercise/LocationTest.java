@@ -1,10 +1,11 @@
-package cayuse.exercise;
+package main.cayuse.exercise;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cayuse.exercise.service.data.ZipCodeMetaData;
+import main.cayuse.exercise.Location;
+import main.cayuse.exercise.service.data.ZipCodeMetaData;
 
 public class LocationTest {
 

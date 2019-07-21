@@ -1,6 +1,4 @@
-package cayuse.exercise.service.imp.data;
-
-import cayuse.exercise.service.data.WeatherData;
+package main.cayuse.exercise.service.data;
 
 public class OpenWeatherMapZipResponseToWeatherData {
 	

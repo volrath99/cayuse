@@ -1,4 +1,4 @@
-package cayuse.exercise.service;
+package main.cayuse.exercise.service;
 
 public interface ElevationRetriever {
 	

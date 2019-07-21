@@ -1,6 +1,6 @@
-package cayuse.exercise.service;
+package main.cayuse.exercise.service;
 
-import cayuse.exercise.service.data.WeatherData;
+import main.cayuse.exercise.service.data.WeatherData;
 
 /**
  * Returns weather data in metric units. 

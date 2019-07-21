@@ -1,4 +1,4 @@
-package cayuse.exercise.service.imp.data;
+package main.cayuse.exercise.service.data;
 
 public class OpenWeatherMapCoord {
 	private double lon;

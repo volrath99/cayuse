@@ -1,4 +1,4 @@
-package cayuse.exercise.service.imp;
+package main.cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;

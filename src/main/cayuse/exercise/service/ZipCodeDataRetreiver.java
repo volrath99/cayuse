@@ -1,4 +1,4 @@
-package cayuse.exercise.service;
+package main.cayuse.exercise.service;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -9,9 +9,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import cayuse.exercise.service.data.ResponsesToZipCodeMetaData;
-import cayuse.exercise.service.data.WeatherData;
-import cayuse.exercise.service.data.ZipCodeMetaData;
+import main.cayuse.exercise.service.data.ResponsesToZipCodeMetaData;
+import main.cayuse.exercise.service.data.WeatherData;
+import main.cayuse.exercise.service.data.ZipCodeMetaData;
 
 public class ZipCodeDataRetreiver {
 	private final WeatherRetriever weatherRetriever;

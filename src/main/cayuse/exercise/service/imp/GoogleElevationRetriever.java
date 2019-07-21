@@ -1,11 +1,11 @@
-package cayuse.exercise.service.imp;
+package main.cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import cayuse.exercise.service.ElevationRetriever;
-import cayuse.exercise.service.imp.data.GoogleElevationResponse;
+import main.cayuse.exercise.service.ElevationRetriever;
+import main.cayuse.exercise.service.data.GoogleElevationResponse;
 
 public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements ElevationRetriever {
 	private static final String PATH = "/elevation/json";

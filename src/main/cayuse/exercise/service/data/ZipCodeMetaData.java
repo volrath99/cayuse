@@ -1,4 +1,4 @@
-package cayuse.exercise.service.data;
+package main.cayuse.exercise.service.data;
 
 public class ZipCodeMetaData {
 	private String city;

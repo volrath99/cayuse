@@ -1,13 +1,13 @@
-package cayuse.exercise.service.imp;
+package main.cayuse.exercise.service.imp;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import cayuse.exercise.service.WeatherRetriever;
-import cayuse.exercise.service.data.WeatherData;
-import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponse;
-import cayuse.exercise.service.imp.data.OpenWeatherMapZipResponseToWeatherData;
+import main.cayuse.exercise.service.WeatherRetriever;
+import main.cayuse.exercise.service.data.OpenWeatherMapZipResponse;
+import main.cayuse.exercise.service.data.OpenWeatherMapZipResponseToWeatherData;
+import main.cayuse.exercise.service.data.WeatherData;
 
 public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	private static final String URI = "http://api.openweathermap.org/data/2.5/weather";

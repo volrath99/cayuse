@@ -2,4 +2,4 @@
 .project
 .settings/
 target/
-resources/cayuse.properties
+src/main/resources/cayuse.properties
