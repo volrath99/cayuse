@@ -1,4 +1,4 @@
-# cayuse
+# Cayuse Exercise
 
 Given a zip returns the City Name, Temperature, Time-Zone, and Elevation.
 
