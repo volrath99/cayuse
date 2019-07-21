@@ -1,4 +1,6 @@
-package main.cayuse.exercise.service.data;
+package main.cayuse.exercise.service.data.api.openWeather;
+
+import main.cayuse.exercise.service.data.WeatherData;
 
 public class OpenWeatherMapZipResponseToWeatherData {
 	

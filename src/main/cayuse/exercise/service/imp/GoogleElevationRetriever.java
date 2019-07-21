@@ -5,7 +5,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import main.cayuse.exercise.service.ElevationRetriever;
-import main.cayuse.exercise.service.data.GoogleElevationResponse;
+import main.cayuse.exercise.service.data.api.google.GoogleElevationResponse;
 
 public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements ElevationRetriever {
 	private static final String PATH = "/elevation/json";

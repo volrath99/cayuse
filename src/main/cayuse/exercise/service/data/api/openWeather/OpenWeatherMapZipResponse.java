@@ -1,4 +1,4 @@
-package main.cayuse.exercise.service.data;
+package main.cayuse.exercise.service.data.api.openWeather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -5,7 +5,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import main.cayuse.exercise.service.TimeZoneRetriever;
-import main.cayuse.exercise.service.data.GoogleTimeZoneResponse;
+import main.cayuse.exercise.service.data.api.google.GoogleTimeZoneResponse;
 
 public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements TimeZoneRetriever {
 	private static final String PATH = "/timezone/json";

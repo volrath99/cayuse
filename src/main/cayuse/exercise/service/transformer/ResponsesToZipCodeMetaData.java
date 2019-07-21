@@ -1,4 +1,7 @@
-package main.cayuse.exercise.service.data;
+package main.cayuse.exercise.service.transformer;
+
+import main.cayuse.exercise.service.data.WeatherData;
+import main.cayuse.exercise.service.data.ZipCodeMetaData;
 
 public class ResponsesToZipCodeMetaData {
 	

@@ -5,9 +5,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import main.cayuse.exercise.service.WeatherRetriever;
-import main.cayuse.exercise.service.data.OpenWeatherMapZipResponse;
-import main.cayuse.exercise.service.data.OpenWeatherMapZipResponseToWeatherData;
 import main.cayuse.exercise.service.data.WeatherData;
+import main.cayuse.exercise.service.data.api.openWeather.OpenWeatherMapZipResponse;
+import main.cayuse.exercise.service.data.api.openWeather.OpenWeatherMapZipResponseToWeatherData;
 
 public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
 	private static final String URI = "http://api.openweathermap.org/data/2.5/weather";

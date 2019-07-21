@@ -1,4 +1,4 @@
-package main.cayuse.exercise.service.data;
+package main.cayuse.exercise.service.data.api.google;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

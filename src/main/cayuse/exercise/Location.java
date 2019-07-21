@@ -1,7 +1,7 @@
 package main.cayuse.exercise;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
@@ -42,11 +42,8 @@ public class Location {
 
 	private static Properties readProperties() {
 		Properties properties = new Properties();
-		String workingDir = System.getProperty("user.dir");
-		try {
-			FileInputStream stream = new FileInputStream(workingDir + "/resources/cayuse.properties");
+		try (InputStream stream = Location.class.getClassLoader().getResourceAsStream("cayuse.properties")) {
 			properties.load(stream);
-			stream.close();
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to read cayuse.properties: " + e.getMessage());
 		}
