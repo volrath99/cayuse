@@ -37,8 +37,8 @@
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
-    <sourceDirectory>src</sourceDirectory>
-    <testSourceDirectory>test</testSourceDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -75,7 +75,7 @@
           <archive>
             <manifest>
             	<addClasspath>true</addClasspath>
-            	<mainClass>main.cayuse.exercise.Location</mainClass>
+            	<mainClass>cayuse.exercise.Location</mainClass>
             	<classpathPrefix>dependency-jars/</classpathPrefix>
             </manifest>
           </archive>
