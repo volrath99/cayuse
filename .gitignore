@@ -2,4 +2,4 @@
 .project
 .settings/
 target/
-src/main/resources/cayuse.properties
+src/main/resources/application-dev.properties

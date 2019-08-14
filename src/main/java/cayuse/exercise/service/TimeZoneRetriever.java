@@ -1,5 +1,7 @@
 package cayuse.exercise.service;
 
+import java.util.concurrent.CompletableFuture;
+
 public interface TimeZoneRetriever {
-	String getTimeZone(double latitude, double longitude);
+	CompletableFuture<String> getTimeZone(double latitude, double longitude);
 }

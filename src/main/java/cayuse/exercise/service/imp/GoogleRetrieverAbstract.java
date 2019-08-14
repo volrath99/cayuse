@@ -3,21 +3,26 @@ package cayuse.exercise.service.imp;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cayuse.exercise.conf.ConfigProperties;
+
 public abstract class GoogleRetrieverAbstract {
-	private static final String URI = "https://maps.googleapis.com/maps/api";
 
 	private final Client client;
 	private final String key;
+	private final String url;
 
-	public GoogleRetrieverAbstract(Client client, String key) {
+	public GoogleRetrieverAbstract(@Autowired Client client, @Autowired ConfigProperties configProperties) {
 		this.client = client;
-		this.key = key;
+		key = configProperties.getGoogleApi().getApiKey();
+		url = configProperties.getGoogleApi().getUrl();
 	}
 
 	abstract String getPath();
 
 	protected WebTarget getTarget() {
-		return client.target(URI).path(getPath()).queryParam("key", key);
+		return client.target(url).path(getPath()).queryParam("key", key);
 	}
 
 }
