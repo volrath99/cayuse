@@ -17,6 +17,7 @@ import cayuse.exercise.service.data.api.google.GoogleTimeZoneResponse;
 
 @Service
 public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements TimeZoneRetriever {
+
 	private static final Logger LOGGER = LogManager.getLogger(GoogleTimeZoneRetriever.class);
 	private static final String PATH = "/timezone/json";
 

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import cayuse.exercise.service.data.ZipCodeMetaData;
 
-public class LocationTest {
+public class CayuseApplicationTest {
 
 	@Test
 	public void testGetFormattedMetaData() {

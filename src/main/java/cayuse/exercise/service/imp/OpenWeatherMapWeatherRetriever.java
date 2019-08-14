@@ -15,6 +15,7 @@ import cayuse.exercise.service.transformer.OpenWeatherMapZipResponseToWeatherDat
 
 @Service
 public class OpenWeatherMapWeatherRetriever implements WeatherRetriever {
+
 	private static final String COUNTRY_CODE = "us";
 	private static final String TEMPERATURE_UNIT = "metric";
 

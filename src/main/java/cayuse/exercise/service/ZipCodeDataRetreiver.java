@@ -12,6 +12,7 @@ import cayuse.exercise.service.transformer.ResponsesToZipCodeMetaData;
 
 @Service
 public class ZipCodeDataRetreiver {
+
 	private final WeatherRetriever weatherRetriever;
 	private final TimeZoneRetriever timeZoneRetriever;
 	private final ElevationRetriever elevationRetriever;

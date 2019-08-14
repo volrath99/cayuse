@@ -18,6 +18,7 @@ import cayuse.exercise.service.data.api.google.GoogleElevationResponse;
 
 @Service
 public class GoogleElevationRetriever extends GoogleRetrieverAbstract implements ElevationRetriever {
+
 	private static final Logger LOGGER = LogManager.getLogger(GoogleElevationRetriever.class);
 	private static final String PATH = "/elevation/json";
 
