@@ -18,6 +18,8 @@ Given a zip returns the City Name, Temperature, Time-Zone, and Elevation.
 
 ## Run
 * mvn clean spring-boot:run -Dspring-boot.run.arguments=<ZIP_CODE> -Dspring.profiles.active=dev
+
 or
+
 * mvn clean package
 * java -jar -Dspring.profiles.active=dev target/Cayuse.jar <ZIP_CODE> 
