@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import cayuse.exercise.conf.ConfigProperties;
@@ -25,6 +26,7 @@ public class GoogleTimeZoneRetriever extends GoogleRetrieverAbstract implements 
 		super(client, configProperties);
 	}
 
+	@Async
 	@Override
 	public CompletableFuture<String> getTimeZone(double latitude, double longitude) {
 		WebTarget target = getTarget().queryParam("location", latitude + "," + longitude).queryParam("timestamp", 0);
