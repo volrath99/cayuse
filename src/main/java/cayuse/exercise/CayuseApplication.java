@@ -24,7 +24,6 @@ import cayuse.exercise.service.data.ZipCodeMetaData;
 @EnableAsync
 public class CayuseApplication implements ApplicationRunner {
 
-	private static final Pattern ZIP_PATTERN = Pattern.compile("\\d{5}");
 	private static final DecimalFormat ELEVATION_FORMAT = new DecimalFormat("#,###");
 
 	@Autowired
@@ -41,7 +40,6 @@ public class CayuseApplication implements ApplicationRunner {
 			throw new IllegalArgumentException("You must pass 1 argument: zip-code.");
 		}
 		String zipCode = nonOptionalArgs.get(0);
-		validateZip(zipCode);
 		ZipCodeMetaData zipCodeMetaData = zipCodeDataRetreiver.getZipCodeMetaData(zipCode);
 		printMetaData(zipCodeMetaData);
 	}
@@ -54,12 +52,6 @@ public class CayuseApplication implements ApplicationRunner {
 	@Bean
 	public Client getClient() {
 		return ClientBuilder.newClient();
-	}
-
-	private static void validateZip(String zip) {
-		if (!ZIP_PATTERN.matcher(zip).matches()) {
-			throw new IllegalArgumentException("Invalid zip-code [" + zip + "].");
-		}
 	}
 
 	private static void printMetaData(ZipCodeMetaData metaData) {

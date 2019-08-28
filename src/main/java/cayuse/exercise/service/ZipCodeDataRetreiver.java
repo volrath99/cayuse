@@ -2,6 +2,7 @@ package cayuse.exercise.service;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import cayuse.exercise.service.transformer.ResponsesToZipCodeMetaData;
 
 @Service
 public class ZipCodeDataRetreiver {
+	private static final Pattern ZIP_PATTERN = Pattern.compile("\\d{5}");
 
 	private final WeatherRetriever weatherRetriever;
 	private final TimeZoneRetriever timeZoneRetriever;
@@ -25,6 +27,11 @@ public class ZipCodeDataRetreiver {
 	}
 
 	public ZipCodeMetaData getZipCodeMetaData(String zipCode) throws InterruptedException, ExecutionException {
+		
+		if (!ZIP_PATTERN.matcher(zipCode).matches()) {
+			throw new IllegalArgumentException("Invalid zip-code [" + zipCode + "].");
+		}
+		
 		WeatherData weatherData = weatherRetriever.getWeatherData(zipCode);
 
 		Future<String> timeZoneFuture = timeZoneRetriever.getTimeZone(weatherData.getLatitude(),
