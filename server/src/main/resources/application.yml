@@ -1,0 +1,9 @@
+cayuse:
+  open-weather-map-api:
+    url: http://api.openweathermap.org/data/2.5/weather
+  google-api:
+    url: https://maps.googleapis.com/maps/api
+  server:
+    cacheInMinutes: 10
+    cacheMax: 1000
+    threads: 8
