@@ -1,5 +1,5 @@
 # Cayuse Exercise
-
+  
 Given a zip returns the City Name, Temperature, Time-Zone, and Elevation.
 
 ## Setup
@@ -7,7 +7,7 @@ Given a zip returns the City Name, Temperature, Time-Zone, and Elevation.
 * Install [Maven](https://maven.apache.org/install.html)
 * [Get a Open Weather Map API ID](https://home.openweathermap.org/api_keys)
 * [Get a Google API Key](https://developers.google.com/maps/documentation/timezone/get-api-key)
-* Create application-dev.yml under src/main/resources with the following:
+* Create application-dev.yml under tool/src/main/resources with the following:
   ```
   cayuse:
     open-weather-map-api:
@@ -17,9 +17,10 @@ Given a zip returns the City Name, Temperature, Time-Zone, and Elevation.
   ```
 
 ## Run
-* mvn clean spring-boot:run -Dspring-boot.run.arguments=<ZIP_CODE> -Dspring.profiles.active=dev
+* mvn clean install
+* mvn spring-boot:run -Dspring.profiles.active=dev  -Dspring-boot.run.arguments=<ZIP_CODE> -pl tool
 
 or
 
 * mvn clean package
-* java -jar -Dspring.profiles.active=dev target/Cayuse.jar <ZIP_CODE> 
+* java -Dspring.profiles.active=dev -jar tool/target/Cayuse-tool.jar <ZIP_CODE>
