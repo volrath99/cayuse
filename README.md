@@ -14,7 +14,7 @@ _server_ - web server
 * Install [Maven](https://maven.apache.org/install.html)
 * [Get a Open Weather Map API ID](https://home.openweathermap.org/api_keys)
 * [Get a Google API Key](https://developers.google.com/maps/documentation/timezone/get-api-key)
-* Create application-dev.yml under tool/src/main/resources and server/src/main/resources with the following:
+* Create application-dev.yml under core/src/main/resources with the following:
   ```
   cayuse:
     open-weather-map-api:
