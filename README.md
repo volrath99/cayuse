@@ -14,7 +14,7 @@ _server_ - web server
 * Install [Maven](https://maven.apache.org/install.html)
 * [Get a Open Weather Map API ID](https://home.openweathermap.org/api_keys)
 * [Get a Google API Key](https://developers.google.com/maps/documentation/timezone/get-api-key)
-* Create application-dev.yml under tool/src/main/resources with the following:
+* Create application-dev.yml under tool/src/main/resources and server/src/main/resources with the following:
   ```
   cayuse:
     open-weather-map-api:
@@ -24,12 +24,12 @@ _server_ - web server
   ```
 
 ## Run Command Line Tool
-* mvn clean install
+* mvn clean install -Dspring.profiles.active=dev
 * mvn spring-boot:run -Dspring.profiles.active=dev  -Dspring-boot.run.arguments=<ZIP_CODE> -pl tool
 
 or
 
-* mvn clean package
+* mvn clean package -Dspring.profiles.active=dev
 * java -Dspring.profiles.active=dev -jar tool/target/Cayuse-tool.jar <ZIP_CODE>
 
 ## Web Server
@@ -43,7 +43,7 @@ or
 
 ### REST Calls
 
-GET cayuse/location/<ZIP_CODE>
+GET /cayuse/location/<ZIP_CODE>
 ```json
 {
   "city": "City Name",
